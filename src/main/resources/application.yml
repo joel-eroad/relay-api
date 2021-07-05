@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: relay-api
+  main:
+    banner-mode: "off"
+  profiles:
+    active: localhost
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        jdbc:
+          batch_size: 30
+        temp:
+          use_jdbc_metadata_defaults: false
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3307/relay
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+resource:
+  path: /relay/api
+
+# Actuator Settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+

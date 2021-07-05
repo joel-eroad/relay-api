@@ -1,0 +1,92 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'java'
+    id "org.springframework.boot" version "2.2.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "com.palantir.docker" version "0.24.0"
+    id "com.github.spotbugs" version "2.0.0" apply false
+}
+
+jar {
+    archivesBaseName = rootProject.name
+    manifest {
+        attributes "Main-Class": "io.relay.Application"
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
+
+    group = 'io.relay'
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    spotbugs {
+        toolVersion = '4.0.0'
+        tasks.withType(com.github.spotbugs.SpotBugsTask) {
+            reports {
+                xml.enabled = false
+                html.enabled = true
+            }
+        }
+    }
+
+    jacoco {
+        toolVersion = "0.8.5"
+    }
+
+    checkstyle {
+        toolVersion '8.28'
+        tasks.withType(Checkstyle) {
+            reports {
+                xml.enabled false
+                html.enabled true
+            }
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    dependencies {
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    //    implementation group: 'org.flywaydb', name: 'flyway-core', version: '6.2.1'
+        implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.6'
+        implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '4.0.0-beta4'
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
+        implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+        runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+
+        testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+        testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
+        testImplementation group: 'org.springframework', name: 'spring-test', version: '5.1.10.RELEASE'
+        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+        testImplementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.17.Final'
+        testImplementation group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.0'
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
+        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.2.4'
+        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.5.2'
+        testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.2'
+        testRuntime group: 'com.h2database', name: 'h2', version: '1.4.200'
+    }
+}
+
