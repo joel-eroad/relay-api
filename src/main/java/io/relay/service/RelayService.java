@@ -43,15 +43,21 @@ public class RelayService {
         }.getType());
     }
 
+    @Transactional
     public List<CreditNoteDto> saveCreditNotes(List<CreditNoteDto> creditNoteDtos) {
         List<CreditNote> creditNotes = mapper.map(creditNoteDtos, new TypeToken<List<CreditNote>>() {
         }.getType());
+
+//                final List<CreditNote> creditNotes = creditNoteDtos.stream()
+////            .map(creditNoteDto -> mapper.map(creditNoteDtos, CreditNote.class))
+////            .collect(Collectors.toList());
 
         final List<CreditNote> createdCreditNotes = creditNoteRepository.saveAll(creditNotes);
         return mapper.map(createdCreditNotes, new TypeToken<List<CreditNoteDto>>() {
         }.getType());
     }
 
+    @Transactional
     public List<AggregatedDto> getAggregatedView() {
         final List<Invoice> invoiceList = invoiceRepository.findByOrderByCreatedAtDesc();
         final List<CreditNote> creditNoteList = creditNoteRepository.findByOrderByCreatedAtDesc();

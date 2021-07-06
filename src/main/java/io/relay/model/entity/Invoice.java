@@ -1,6 +1,6 @@
 package io.relay.model.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -34,9 +34,9 @@ public class Invoice {
     @NotNull(message = "invoice amount is mandatory")
     private double value;
 
-    @Column(columnDefinition = "TIMESTAMP(6)")
-    @CreationTimestamp
-    private Timestamp createdAt;
+    @Column(updatable = false)
+    @CreatedDate
+    private Date createdAt;
 
     public UUID getId() {
         return id;
@@ -62,11 +62,11 @@ public class Invoice {
         this.value = value;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

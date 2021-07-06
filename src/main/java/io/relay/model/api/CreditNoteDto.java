@@ -4,9 +4,11 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.relay.util.DateToLongSerializer;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -31,7 +33,8 @@ public class CreditNoteDto implements OnCreate, OnUpdate {
     @NotNull(groups = OnUpdate.class)
     @Null(groups = OnCreate.class)
     @JsonFormat(shape = STRING)
-    private long createdAt;
+    @JsonSerialize(using = DateToLongSerializer.class)
+    private Date createdAt;
 
     public UUID getId() {
         return id;
@@ -57,11 +60,11 @@ public class CreditNoteDto implements OnCreate, OnUpdate {
         this.value = value;
     }
 
-    public long getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -1,6 +1,8 @@
 package io.relay.model.entity;
 
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -32,9 +34,9 @@ public class CreditNote {
     @NotNull(message = "credit amount is mandatory")
     private double value;
 
-    @Column(columnDefinition = "TIMESTAMP(6)")
-    @CreationTimestamp
-    private Timestamp createdAt;
+    @Column(updatable = false)
+    @CreatedDate
+    private Date createdAt;
 
     public UUID getId() {
         return id;
@@ -60,11 +62,31 @@ public class CreditNote {
         this.value = value;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CreditNote)) {
+            return false;
+        }
+        CreditNote that = (CreditNote) o;
+        return Double.compare(that.getValue(), getValue()) == 0 &&
+            getId().equals(that.getId()) &&
+            getNumber().equals(that.getNumber()) &&
+            getCreatedAt().equals(that.getCreatedAt());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNumber(), getValue(), getCreatedAt());
     }
 }
