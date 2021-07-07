@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: test
+
+---
+resource:
+  path: /relay/api
+
+spring:
+  profiles: test
+  application:
+    name: Relay API Service
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  main:
+    banner-mode: "off"
+  datasource:
+    url: jdbc:h2:mem:relay
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+
+# Actuator Settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,threaddump,env
+  endpoint:
+    health:
+      show-details: ALWAYS

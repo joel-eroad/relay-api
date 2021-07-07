@@ -1,6 +1,5 @@
 package io.relay.model.entity;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
