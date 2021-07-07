@@ -27,7 +27,7 @@ public class Invoice {
 
     @Column
     @NotNull(message = "invoice number is mandatory")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "contains alphanumeric values")
+    @Pattern(regexp = "^[a-zA-Z0-9\\-]+$", message = "contains alphanumeric values")
     private String number;
 
     @Column(name = "amount")

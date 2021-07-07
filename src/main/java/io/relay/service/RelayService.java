@@ -1,5 +1,7 @@
 package io.relay.service;
 
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
@@ -9,11 +11,13 @@ import io.relay.model.entity.Invoice;
 import io.relay.repository.CreditNoteRepository;
 import io.relay.repository.InvoiceRepository;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RelayService {
@@ -35,9 +39,6 @@ public class RelayService {
         List<Invoice> invoices = mapper.map(invoiceDtos, new TypeToken<List<Invoice>>() {
         }.getType());
 
-//        final List<Invoice> invoices = invoiceDtos.stream()
-//            .map(invoiceDto -> mapper.map(invoiceDto, Invoice.class))
-//            .collect(Collectors.toList());
         final List<Invoice> createdInvoices = invoiceRepository.saveAll(invoices);
         return mapper.map(createdInvoices, new TypeToken<List<InvoiceDto>>() {
         }.getType());
@@ -48,25 +49,28 @@ public class RelayService {
         List<CreditNote> creditNotes = mapper.map(creditNoteDtos, new TypeToken<List<CreditNote>>() {
         }.getType());
 
-//                final List<CreditNote> creditNotes = creditNoteDtos.stream()
-////            .map(creditNoteDto -> mapper.map(creditNoteDtos, CreditNote.class))
-////            .collect(Collectors.toList());
-
         final List<CreditNote> createdCreditNotes = creditNoteRepository.saveAll(creditNotes);
         return mapper.map(createdCreditNotes, new TypeToken<List<CreditNoteDto>>() {
         }.getType());
     }
 
-    @Transactional
-    public List<AggregatedDto> getAggregatedView() {
-        final List<Invoice> invoiceList = invoiceRepository.findByOrderByCreatedAtDesc();
-        final List<CreditNote> creditNoteList = creditNoteRepository.findByOrderByCreatedAtDesc();
+    @Transactional(readOnly = true)
+    public AggregatedDto getAggregatedView() {
+        final List<Invoice> invoiceList = invoiceRepository.findAll(Sort.by(DESC, "createdAt"));
+        final List<CreditNote> creditNoteList = creditNoteRepository.findAll(Sort.by(DESC, "createdAt"));
 
         AggregatedModel aggregatedModel = new AggregatedModel();
-        aggregatedModel.setInvoice(invoiceList);
-        aggregatedModel.setCreditNote(creditNoteList);
+        aggregatedModel.setInvoices(invoiceList);
+        aggregatedModel.setCreditNotes(creditNoteList);
 
-        return mapper.map(aggregatedModel, new TypeToken<AggregatedDto>() {
-        }.getType());
+        final TypeMap<AggregatedModel, AggregatedDto> typeMap1 = mapper.createTypeMap(AggregatedModel.class,
+            AggregatedDto.class);
+
+        typeMap1
+            .addMappings(mapping -> mapping
+                .map(AggregatedModel::getInvoices, AggregatedDto::setInvoiceDto))
+            .addMappings(mapping -> mapping.map(AggregatedModel::getCreditNotes, AggregatedDto::setCreditNoteDto));
+
+        return typeMap1.map(aggregatedModel);
     }
 }

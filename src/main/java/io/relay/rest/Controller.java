@@ -3,7 +3,6 @@ package io.relay.rest;
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
-import io.relay.model.api.PagedResponse;
 import io.relay.service.RelayService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,9 @@ public class Controller {
     }
 
     @GetMapping(value = "/getAggregatedView", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PagedResponse<AggregatedDto> getAggregatedInformation() {
-        return new PagedResponse<>(relayService.getAggregatedView());
+    public AggregatedDto getAggregatedInformation() {
+
+        return relayService.getAggregatedView();
+
     }
 }

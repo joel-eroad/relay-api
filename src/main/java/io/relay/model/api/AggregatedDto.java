@@ -1,33 +1,34 @@
 package io.relay.model.api;
 
+import java.util.List;
+
 public class AggregatedDto {
 
-    private InvoiceDto invoiceDto;
-    private CreditNoteDto creditNoteDto;
+    private List<InvoiceDto> invoiceDto;
+    private List<CreditNoteDto> creditNoteDto;
 
-    private AggregatedDto() {
-
-    }
-
-
-    public AggregatedDto(InvoiceDto invoiceDto, CreditNoteDto creditNoteDto) {
+    public AggregatedDto(List<InvoiceDto> invoiceDto, List<CreditNoteDto> creditNoteDto) {
         this.invoiceDto = invoiceDto;
         this.creditNoteDto = creditNoteDto;
     }
 
-    public InvoiceDto getInvoiceDto() {
+    public AggregatedDto() {
+
+    }
+
+    public List<InvoiceDto> getInvoiceDto() {
         return invoiceDto;
     }
 
-    public void setInvoiceDto(InvoiceDto invoiceDto) {
+    public void setInvoiceDto(List<InvoiceDto> invoiceDto) {
         this.invoiceDto = invoiceDto;
     }
 
-    public CreditNoteDto getCreditNoteDto() {
+    public List<CreditNoteDto> getCreditNoteDto() {
         return creditNoteDto;
     }
 
-    public void setCreditNoteDto(CreditNoteDto creditNoteDto) {
+    public void setCreditNoteDto(List<CreditNoteDto> creditNoteDto) {
         this.creditNoteDto = creditNoteDto;
     }
 }

@@ -4,14 +4,22 @@ import java.util.List;
 
 public class AggregatedModel {
 
-    private List<Invoice> invoice;
-    private List<CreditNote> creditNote;
+    private List<Invoice> invoices;
+    private List<CreditNote> creditNotes;
 
-    public void setInvoice(List<Invoice> invoice) {
-        this.invoice = invoice;
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setCreditNote(List<CreditNote> creditNote) {
-        this.creditNote = creditNote;
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public List<CreditNote> getCreditNotes() {
+        return creditNotes;
+    }
+
+    public void setCreditNotes(List<CreditNote> creditNotes) {
+        this.creditNotes = creditNotes;
     }
 }
