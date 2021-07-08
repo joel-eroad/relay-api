@@ -1,19 +1,16 @@
 package io.relay.model.entity;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -32,7 +29,7 @@ public class Invoice {
 
     @Column(name = "amount")
     @NotNull(message = "invoice amount is mandatory")
-    private double value;
+    private BigDecimal value;
 
     @Column(updatable = false)
     @CreatedDate
@@ -54,11 +51,11 @@ public class Invoice {
         this.number = number;
     }
 
-    public double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -81,7 +78,8 @@ public class Invoice {
         Invoice invoice = (Invoice) o;
         return Objects.equals(id, invoice.id)
             && Objects.equals(number, invoice.number)
-            && Objects.equals(value, invoice.value);
+            && Objects.equals(value, invoice.value)
+            && Objects.equals(createdAt, invoice.createdAt);
     }
 
     @Override

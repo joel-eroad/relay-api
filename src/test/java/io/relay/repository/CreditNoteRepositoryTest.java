@@ -1,16 +1,6 @@
 package io.relay.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
 import io.relay.model.entity.CreditNote;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +8,18 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -50,13 +52,13 @@ class CreditNoteRepositoryTest {
         CreditNote creditNote1 = new CreditNote();
         creditNote1.setId(UUID.randomUUID());
         creditNote1.setNumber("INVC-01");
-        creditNote1.setValue(130.99);
+        creditNote1.setValue(BigDecimal.valueOf(130.99));
         creditNote1.setCreatedAt(new Date());
 
         CreditNote creditNote2 = new CreditNote();
         creditNote2.setId(UUID.randomUUID());
         creditNote2.setNumber("INVC-02");
-        creditNote2.setValue(100.99);
+        creditNote2.setValue(BigDecimal.valueOf(100.99));
         creditNote2.setCreatedAt(new Date());
 
         creditNoteList.add(creditNote1);

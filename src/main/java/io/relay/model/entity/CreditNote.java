@@ -1,19 +1,16 @@
 package io.relay.model.entity;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -31,7 +28,7 @@ public class CreditNote {
 
     @Column(name = "amount")
     @NotNull(message = "credit amount is mandatory")
-    private double value;
+    private BigDecimal value;
 
     @Column(updatable = false)
     @CreatedDate
@@ -53,11 +50,11 @@ public class CreditNote {
         this.number = number;
     }
 
-    public double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -71,21 +68,17 @@ public class CreditNote {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CreditNote)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         CreditNote that = (CreditNote) o;
-        return Double.compare(that.getValue(), getValue()) == 0 &&
-            getId().equals(that.getId()) &&
-            getNumber().equals(that.getNumber()) &&
-            getCreatedAt().equals(that.getCreatedAt());
+        return Objects.equals(id, that.id)
+            && Objects.equals(number, that.number)
+            && Objects.equals(value, that.value)
+            && Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNumber(), getValue(), getCreatedAt());
+        return Objects.hash(id, number, value, createdAt);
     }
 }
