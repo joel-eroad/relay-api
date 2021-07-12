@@ -4,31 +4,31 @@ import java.util.List;
 
 public class AggregatedDto {
 
-    private List<InvoiceDto> invoiceDto;
-    private List<CreditNoteDto> creditNoteDto;
+    private List<InvoiceDto> invoices;
+    private List<CreditNoteDto> creditNotes;
 
-    public AggregatedDto(List<InvoiceDto> invoiceDto, List<CreditNoteDto> creditNoteDto) {
-        this.invoiceDto = invoiceDto;
-        this.creditNoteDto = creditNoteDto;
+    public AggregatedDto(List<InvoiceDto> invoices, List<CreditNoteDto> creditNotes) {
+        this.invoices = invoices;
+        this.creditNotes = creditNotes;
     }
 
     public AggregatedDto() {
 
     }
 
-    public List<InvoiceDto> getInvoiceDto() {
-        return invoiceDto;
+    public List<InvoiceDto> getInvoices() {
+        return invoices;
     }
 
-    public void setInvoiceDto(List<InvoiceDto> invoiceDto) {
-        this.invoiceDto = invoiceDto;
+    public void setInvoices(List<InvoiceDto> invoices) {
+        this.invoices = invoices;
     }
 
-    public List<CreditNoteDto> getCreditNoteDto() {
-        return creditNoteDto;
+    public List<CreditNoteDto> getCreditNotes() {
+        return creditNotes;
     }
 
-    public void setCreditNoteDto(List<CreditNoteDto> creditNoteDto) {
-        this.creditNoteDto = creditNoteDto;
+    public void setCreditNotes(List<CreditNoteDto> creditNotes) {
+        this.creditNotes = creditNotes;
     }
 }

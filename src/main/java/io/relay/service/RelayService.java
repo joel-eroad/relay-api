@@ -68,8 +68,8 @@ public class RelayService {
 
         typeMap1
             .addMappings(mapping -> mapping
-                .map(AggregatedModel::getInvoices, AggregatedDto::setInvoiceDto))
-            .addMappings(mapping -> mapping.map(AggregatedModel::getCreditNotes, AggregatedDto::setCreditNoteDto));
+                .map(AggregatedModel::getInvoices, AggregatedDto::setInvoices))
+            .addMappings(mapping -> mapping.map(AggregatedModel::getCreditNotes, AggregatedDto::setCreditNotes));
 
         return typeMap1.map(aggregatedModel);
     }
