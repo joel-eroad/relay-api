@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import io.relay.util.DateToLongSerializer;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -63,17 +63,21 @@ public class CreditNoteDto implements OnCreate, OnUpdate {
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+        return new Date(createdAt.getTime());
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = createdAt != null ? new Date(createdAt.getTime()) : null;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CreditNoteDto)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CreditNoteDto)) {
+            return false;
+        }
         CreditNoteDto that = (CreditNoteDto) o;
         return id.equals(that.id) && number.equals(that.number) && value.equals(that.value) && createdAt.equals(that.createdAt);
     }

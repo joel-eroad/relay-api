@@ -1,6 +1,20 @@
 package io.relay.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import io.relay.model.entity.CreditNote;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +22,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -47,7 +49,7 @@ class CreditNoteRepositoryTest {
 
     @Test
     public void findAllCreditNotes() {
-        List<CreditNote> creditNoteList = new ArrayList<>();
+        final List<CreditNote> creditNoteList = new ArrayList<>();
 
         CreditNote creditNote1 = new CreditNote();
         creditNote1.setId(UUID.randomUUID());
@@ -67,8 +69,7 @@ class CreditNoteRepositoryTest {
         final List<CreditNote> creditNotes = creditNoteRepository.saveAll(creditNoteList);
         assertNotNull(creditNoteRepository.findAll(Sort.by(DESC, "createdAt")));
         assertThat(creditNotes.size()).isEqualTo(2);
-        assertThat(creditNoteList.get(0)).
-            isEqualToComparingOnlyGivenFields(creditNote1, "number", "value");
+        assertThat(creditNoteList.get(0)).isEqualToComparingOnlyGivenFields(creditNote1, "number", "value");
     }
 
 }

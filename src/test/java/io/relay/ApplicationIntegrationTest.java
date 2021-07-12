@@ -1,5 +1,17 @@
 package io.relay;
 
+import static io.relay.utils.TestUtils.createCreditNoteEntities;
+import static io.relay.utils.TestUtils.createInvoiceEntities;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_XML;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
@@ -7,6 +19,11 @@ import io.relay.model.entity.CreditNote;
 import io.relay.model.entity.Invoice;
 import io.relay.repository.CreditNoteRepository;
 import io.relay.repository.InvoiceRepository;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -20,22 +37,6 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import static io.relay.utils.TestUtils.createCreditNoteEntities;
-import static io.relay.utils.TestUtils.createInvoiceEntities;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.APPLICATION_XML;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc

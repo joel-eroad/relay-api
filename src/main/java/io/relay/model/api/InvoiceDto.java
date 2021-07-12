@@ -62,17 +62,21 @@ public class InvoiceDto implements OnCreate, OnUpdate {
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+        return new Date(createdAt.getTime());
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = createdAt != null ? new Date(createdAt.getTime()) : null;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         InvoiceDto that = (InvoiceDto) o;
         return id.equals(that.id) && number.equals(that.number) && value.equals(that.value) && createdAt.equals(that.createdAt);
     }

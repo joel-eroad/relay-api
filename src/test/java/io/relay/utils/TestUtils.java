@@ -6,16 +6,21 @@ import io.relay.model.entity.CreditNote;
 import io.relay.model.entity.Invoice;
 
 import java.math.BigDecimal;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TestUtils {
 
     public static List<Invoice> createInvoiceEntities() {
-        List<Invoice> invoiceEntities = new ArrayList<>();
+        final List<Invoice> invoiceEntities = new ArrayList<>();
 
-        Invoice invoiceEntity1 = new Invoice();
-        Invoice invoiceEntity2 = new Invoice();
+        final Invoice invoiceEntity1 = new Invoice();
+        final Invoice invoiceEntity2 = new Invoice();
 
         invoiceEntity1.setId(UUID.randomUUID());
         invoiceEntity1.setNumber("INVC-01");
@@ -35,10 +40,10 @@ public class TestUtils {
     }
 
     public static List<CreditNote> createCreditNoteEntities() {
-        List<CreditNote> creditNoteEntities = new ArrayList<>();
+        final List<CreditNote> creditNoteEntities = new ArrayList<>();
 
-        CreditNote creditNoteEntity1 = new CreditNote();
-        CreditNote creditNoteEntity2 = new CreditNote();
+        final CreditNote creditNoteEntity1 = new CreditNote();
+        final CreditNote creditNoteEntity2 = new CreditNote();
 
         creditNoteEntity1.setId(UUID.randomUUID());
         creditNoteEntity1.setNumber("CRN-01");
@@ -58,10 +63,10 @@ public class TestUtils {
     }
 
     public static List<InvoiceDto> createInvoiceDtos() {
-        List<InvoiceDto> invoiceDtos = new ArrayList<>();
+        final List<InvoiceDto> invoiceDtos = new ArrayList<>();
 
-        InvoiceDto invoiceDto1 = new InvoiceDto();
-        InvoiceDto invoiceDto2 = new InvoiceDto();
+        final InvoiceDto invoiceDto1 = new InvoiceDto();
+        final InvoiceDto invoiceDto2 = new InvoiceDto();
 
         invoiceDto1.setId(UUID.randomUUID());
         invoiceDto1.setNumber("INVC-01");
@@ -81,10 +86,10 @@ public class TestUtils {
     }
 
     public static List<CreditNoteDto> createCreditNoteDtos() {
-        List<CreditNoteDto> creditNoteDtos = new ArrayList<>();
+        final List<CreditNoteDto> creditNoteDtos = new ArrayList<>();
 
-        CreditNoteDto creditNoteDto1 = new CreditNoteDto();
-        CreditNoteDto creditNoteDto2 = new CreditNoteDto();
+        final CreditNoteDto creditNoteDto1 = new CreditNoteDto();
+        final CreditNoteDto creditNoteDto2 = new CreditNoteDto();
 
         creditNoteDto1.setId(UUID.randomUUID());
         creditNoteDto1.setNumber("CRN-01");

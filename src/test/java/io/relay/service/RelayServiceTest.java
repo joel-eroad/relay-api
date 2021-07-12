@@ -1,39 +1,37 @@
 package io.relay.service;
 
-import io.relay.configuration.ServiceConfig;
-import io.relay.model.api.AggregatedDto;
-import io.relay.model.api.CreditNoteDto;
-import io.relay.model.api.InvoiceDto;
-import io.relay.model.entity.AggregatedModel;
-import io.relay.model.entity.CreditNote;
-import io.relay.model.entity.Invoice;
-import io.relay.repository.CreditNoteRepository;
-import io.relay.repository.InvoiceRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import static io.relay.utils.TestUtils.createCreditNoteEntities;
 import static io.relay.utils.TestUtils.createInvoiceEntities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.*;
-import static org.springframework.data.domain.Sort.Direction.DESC;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
+
+import io.relay.configuration.ServiceConfig;
+import io.relay.model.api.AggregatedDto;
+import io.relay.model.api.CreditNoteDto;
+import io.relay.model.api.InvoiceDto;
+import io.relay.model.entity.CreditNote;
+import io.relay.model.entity.Invoice;
+import io.relay.repository.CreditNoteRepository;
+import io.relay.repository.InvoiceRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)

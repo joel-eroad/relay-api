@@ -1,16 +1,23 @@
 package io.relay.model.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -60,11 +67,11 @@ public class Invoice {
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+        return new Date(createdAt.getTime());
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = createdAt != null ? new Date(createdAt.getTime()) : null;
     }
 
     @Override
@@ -86,6 +93,4 @@ public class Invoice {
     public int hashCode() {
         return Objects.hash(id, number, value, createdAt);
     }
-
-
 }

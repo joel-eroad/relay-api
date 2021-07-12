@@ -1,5 +1,7 @@
 package io.relay.service;
 
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
@@ -8,6 +10,12 @@ import io.relay.model.entity.CreditNote;
 import io.relay.model.entity.Invoice;
 import io.relay.repository.CreditNoteRepository;
 import io.relay.repository.InvoiceRepository;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
@@ -15,13 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.ConstraintViolationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class RelayService {

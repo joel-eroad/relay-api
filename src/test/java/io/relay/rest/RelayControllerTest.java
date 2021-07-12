@@ -1,9 +1,21 @@
 package io.relay.rest;
 
+import static io.relay.utils.TestUtils.createCreditNoteDtos;
+import static io.relay.utils.TestUtils.createInvoiceDtos;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
+
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
 import io.relay.service.RelayService;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,17 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import static io.relay.utils.TestUtils.createCreditNoteDtos;
-import static io.relay.utils.TestUtils.createInvoiceDtos;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -79,10 +80,12 @@ public class RelayControllerTest {
         createCreditNote2.setNumber("CRN-02");
         createCreditNote2.setValue(BigDecimal.valueOf(56.00));
 
-        List<CreditNoteDto> createCreditNotes = new ArrayList<>() {{
-            add(createCreditNote1);
-            add(createCreditNote2);
-        }};
+        List<CreditNoteDto> createCreditNotes = new ArrayList<>() {
+            {
+                add(createCreditNote1);
+                add(createCreditNote2);
+            }
+        };
 
         when(relayService.saveCreditNotes(createCreditNotes)).thenReturn(testCreditNotes);
 
@@ -103,7 +106,8 @@ public class RelayControllerTest {
 
         final AggregatedDto actual = relayController.getAggregatedInformation();
         assertThat(actual.getInvoices()).hasSameSizeAs(testAggregatedDto.getInvoices()).containsExactlyElementsOf(testAggregatedDto.getInvoices());
-        assertThat(actual.getCreditNotes()).hasSameSizeAs(testAggregatedDto.getCreditNotes()).containsExactlyElementsOf(testAggregatedDto.getCreditNotes());
+        assertThat(actual.getCreditNotes()).hasSameSizeAs(testAggregatedDto.getCreditNotes())
+            .containsExactlyElementsOf(testAggregatedDto.getCreditNotes());
         verify(relayService).getAggregatedView();
     }
 }
