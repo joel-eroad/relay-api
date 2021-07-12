@@ -24,6 +24,7 @@ public class CreditNote {
 
     @NotNull(message = "credit number is mandatory")
     @Pattern(regexp = "^[a-zA-Z0-9\\-]+$", message = "contains alphanumeric values")
+    @Column(unique = true)
     private String number;
 
     @Column(name = "amount")

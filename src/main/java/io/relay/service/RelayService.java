@@ -1,7 +1,5 @@
 package io.relay.service;
 
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
 import io.relay.model.api.AggregatedDto;
 import io.relay.model.api.CreditNoteDto;
 import io.relay.model.api.InvoiceDto;
@@ -10,7 +8,6 @@ import io.relay.model.entity.CreditNote;
 import io.relay.model.entity.Invoice;
 import io.relay.repository.CreditNoteRepository;
 import io.relay.repository.InvoiceRepository;
-import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
@@ -18,6 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.ConstraintViolationException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class RelayService {
@@ -35,6 +39,14 @@ public class RelayService {
 
     @Transactional
     public List<InvoiceDto> saveInvoices(List<InvoiceDto> invoiceDtos) {
+        final List<InvoiceDto> exists = invoiceDtos
+            .stream()
+            .filter(invoiceDto -> invoiceRepository.existsByNumber(invoiceDto.getNumber()))
+            .collect(Collectors.toList());
+
+        if (!exists.isEmpty()) {
+            throw new ConstraintViolationException("These invoice numbers already exists", new HashSet<>());
+        }
 
         List<Invoice> invoices = mapper.map(invoiceDtos, new TypeToken<List<Invoice>>() {
         }.getType());
@@ -46,6 +58,15 @@ public class RelayService {
 
     @Transactional
     public List<CreditNoteDto> saveCreditNotes(List<CreditNoteDto> creditNoteDtos) {
+        final List<CreditNoteDto> exists = creditNoteDtos
+            .stream()
+            .filter(creditNoteDto -> creditNoteRepository.existsByNumber(creditNoteDto.getNumber()))
+            .collect(Collectors.toList());
+
+        if (!exists.isEmpty()) {
+            throw new ConstraintViolationException("These credit numbers already exists", new HashSet<>());
+        }
+
         List<CreditNote> creditNotes = mapper.map(creditNoteDtos, new TypeToken<List<CreditNote>>() {
         }.getType());
 

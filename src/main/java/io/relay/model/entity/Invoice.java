@@ -22,7 +22,7 @@ public class Invoice {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column
+    @Column(unique = true)
     @NotNull(message = "invoice number is mandatory")
     @Pattern(regexp = "^[a-zA-Z0-9\\-]+$", message = "contains alphanumeric values")
     private String number;
