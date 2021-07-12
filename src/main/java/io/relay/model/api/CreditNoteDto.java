@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import io.relay.util.DateToLongSerializer;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
@@ -36,7 +36,7 @@ public class CreditNoteDto implements OnCreate, OnUpdate {
     @Null(groups = OnCreate.class)
     @JsonFormat(shape = STRING)
     @JsonSerialize(using = DateToLongSerializer.class)
-    private Date createdAt;
+    private Instant createdAt;
 
     public UUID getId() {
         return id;
@@ -62,12 +62,12 @@ public class CreditNoteDto implements OnCreate, OnUpdate {
         this.value = value;
     }
 
-    public Date getCreatedAt() {
-        return new Date(createdAt.getTime());
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt != null ? new Date(createdAt.getTime()) : null;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

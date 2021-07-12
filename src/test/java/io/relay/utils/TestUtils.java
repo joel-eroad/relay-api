@@ -7,9 +7,9 @@ import io.relay.model.entity.Invoice;
 
 import java.math.BigDecimal;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,12 +25,12 @@ public class TestUtils {
         invoiceEntity1.setId(UUID.randomUUID());
         invoiceEntity1.setNumber("INVC-01");
         invoiceEntity1.setValue(BigDecimal.valueOf(100.00));
-        invoiceEntity1.setCreatedAt(new Date());
+        invoiceEntity1.setCreatedAt(Instant.now());
 
         invoiceEntity2.setId(UUID.randomUUID());
         invoiceEntity2.setNumber("INVC-02");
         invoiceEntity2.setValue(BigDecimal.valueOf(156.00));
-        invoiceEntity2.setCreatedAt(new Date());
+        invoiceEntity2.setCreatedAt(Instant.now());
 
         invoiceEntities.add(invoiceEntity1);
         invoiceEntities.add(invoiceEntity2);
@@ -48,12 +48,12 @@ public class TestUtils {
         creditNoteEntity1.setId(UUID.randomUUID());
         creditNoteEntity1.setNumber("CRN-01");
         creditNoteEntity1.setValue(BigDecimal.valueOf(50.00));
-        creditNoteEntity1.setCreatedAt(new Date());
+        creditNoteEntity1.setCreatedAt(Instant.now());
 
         creditNoteEntity2.setId(UUID.randomUUID());
         creditNoteEntity2.setNumber("CRN-02");
         creditNoteEntity2.setValue(BigDecimal.valueOf(56.00));
-        creditNoteEntity2.setCreatedAt(new Date());
+        creditNoteEntity2.setCreatedAt(Instant.now());
 
         creditNoteEntities.add(creditNoteEntity1);
         creditNoteEntities.add(creditNoteEntity2);
@@ -71,12 +71,12 @@ public class TestUtils {
         invoiceDto1.setId(UUID.randomUUID());
         invoiceDto1.setNumber("INVC-01");
         invoiceDto1.setValue(BigDecimal.valueOf(100.00));
-        invoiceDto1.setCreatedAt(new Date());
+        invoiceDto1.setCreatedAt(Instant.now());
 
         invoiceDto2.setId(UUID.randomUUID());
         invoiceDto2.setNumber("INVC-02");
         invoiceDto2.setValue(BigDecimal.valueOf(156.00));
-        invoiceDto2.setCreatedAt(new Date());
+        invoiceDto2.setCreatedAt(Instant.now());
 
         invoiceDtos.add(invoiceDto1);
         invoiceDtos.add(invoiceDto2);
@@ -94,12 +94,12 @@ public class TestUtils {
         creditNoteDto1.setId(UUID.randomUUID());
         creditNoteDto1.setNumber("CRN-01");
         creditNoteDto1.setValue(BigDecimal.valueOf(50.00));
-        creditNoteDto1.setCreatedAt(new Date());
+        creditNoteDto1.setCreatedAt(Instant.now());
 
         creditNoteDto2.setId(UUID.randomUUID());
         creditNoteDto2.setNumber("CRN-02");
         creditNoteDto2.setValue(BigDecimal.valueOf(56.00));
-        creditNoteDto2.setCreatedAt(new Date());
+        creditNoteDto2.setCreatedAt(Instant.now());
 
         creditNoteDtos.add(creditNoteDto1);
         creditNoteDtos.add(creditNoteDto2);

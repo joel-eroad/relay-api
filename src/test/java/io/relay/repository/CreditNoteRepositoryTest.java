@@ -7,8 +7,8 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 import io.relay.model.entity.CreditNote;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,13 +55,13 @@ class CreditNoteRepositoryTest {
         creditNote1.setId(UUID.randomUUID());
         creditNote1.setNumber("INVC-01");
         creditNote1.setValue(BigDecimal.valueOf(130.99));
-        creditNote1.setCreatedAt(new Date());
+        creditNote1.setCreatedAt(Instant.now());
 
         CreditNote creditNote2 = new CreditNote();
         creditNote2.setId(UUID.randomUUID());
         creditNote2.setNumber("INVC-02");
         creditNote2.setValue(BigDecimal.valueOf(100.99));
-        creditNote2.setCreatedAt(new Date());
+        creditNote2.setCreatedAt(Instant.now());
 
         creditNoteList.add(creditNote1);
         creditNoteList.add(creditNote2);

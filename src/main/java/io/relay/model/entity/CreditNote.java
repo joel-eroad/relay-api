@@ -1,7 +1,7 @@
 package io.relay.model.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,7 +39,7 @@ public class CreditNote {
 
     @Column(updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private Instant createdAt;
 
     public UUID getId() {
         return id;
@@ -65,12 +65,12 @@ public class CreditNote {
         this.value = value;
     }
 
-    public Date getCreatedAt() {
-        return new Date(createdAt.getTime());
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt != null ? new Date(createdAt.getTime()) : null;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

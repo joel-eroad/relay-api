@@ -23,6 +23,7 @@ import io.relay.repository.InvoiceRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,11 +85,11 @@ public class ApplicationIntegrationTest {
     @Test
     void testCreateInvoices() throws Exception {
         InvoiceDto createInvoice1 = new InvoiceDto();
-        createInvoice1.setNumber("INVC-01");
+        createInvoice1.setNumber(UUID.randomUUID().toString());
         createInvoice1.setValue(BigDecimal.valueOf(100.00));
 
         InvoiceDto createInvoice2 = new InvoiceDto();
-        createInvoice2.setNumber("INVC-02");
+        createInvoice2.setNumber(UUID.randomUUID().toString());
         createInvoice2.setValue(BigDecimal.valueOf(156.00));
 
         List<InvoiceDto> invoices = new ArrayList<>() {
@@ -117,11 +118,11 @@ public class ApplicationIntegrationTest {
     @Test
     void testCreateCreditNotes() throws Exception {
         CreditNoteDto createCreditNote1 = new CreditNoteDto();
-        createCreditNote1.setNumber("CRN-01");
+        createCreditNote1.setNumber(UUID.randomUUID().toString());
         createCreditNote1.setValue(BigDecimal.valueOf(50.00));
 
         CreditNoteDto createCreditNote2 = new CreditNoteDto();
-        createCreditNote2.setNumber("CRN-02");
+        createCreditNote2.setNumber(UUID.randomUUID().toString());
         createCreditNote2.setValue(BigDecimal.valueOf(56.00));
 
         List<CreditNoteDto> creditNotes = new ArrayList<>() {
