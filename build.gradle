@@ -63,6 +63,12 @@ allprojects {
         }
     }
 
+    docker {
+        name "relay-api:latest"
+//        tag "version", "relay-api":${TAG}"
+        files bootJar.archiveFile.getOrNull()
+    }
+
     dependencies {
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'

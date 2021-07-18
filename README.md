@@ -1,14 +1,10 @@
-[![Build Status](https://travis-ci.com/TechemyLtd/bnc-asset-re.svg?token=E336h1ZKxxzxrz3tKH8z&branch=master)](https://travis-ci.com/TechemyLtd/bnc-asset-re)
-
 # Relay API Service
-
-The asset re is a reference re which holds information directly relating to crypto and fiat assets.
 
 ## How tos
 
 ## Build & Test
 
-This project uses gradle and uses the default tasks to compile and run unit tests. 
+This project uses gradle and uses the default tasks to compile and run unit tests.
 
 ```bash
 ./gradlew clean assemble check
@@ -20,43 +16,82 @@ This project uses gradle and uses the default tasks to compile and run unit test
 ./gradlew clean assemble check docker
 ```
 
-2. Run Postgres
+2. Run Docker Compose to start up the application and MySQL service.
 ```bash
-docker run --name postgres -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_DB=marketdata postgres:9.6-alpine
+docker-compose up --build
 ```
 
-3. Run the docker container 
+3. Run Docker Compose to stop the application and MySQL service
 ```bash
-docker run -e SPRING_PROFILES_ACTIVE=localhost -p 8080:8080 -i -t asset-re
+docker-compose down --rmi all
 ```
 
-### Build production equivalent container
-```bash
-./gradlew clean assemble check docker dockerTag -PTAG=$(git rev-parse --verify HEAD --short) -PREPOSITORY_URI=${DOCKER_REPO}${IMAGE_NAME}
+## Explore REST APIS
+
+The app defines following CRUD APIs.
+
+BaseURL: <http://localhost:8080>
+
+Test the endpoints using Postman or any other REST Client.
+
+### Invoices
+
+| Method | Url | Description | Sample Valid Request Body |
+| ------ | --- | ----------- | ------------------------- |
+| POST   | /relay/api/invoices | Create new invoices | [JSON](#invoicecreate) | |
+
+##### <a id="invoicecreate">Create Invoices -> /relay/api/invoices</a>
+```json
+[
+  {
+    "invoiceNumber": "INVC-01",
+    "value": "100.00"
+  },
+  {
+    "invoiceNumber": "INVC-02",
+    "value": "110.00"
+  },
+  {
+    "invoiceNumber": "INVC-03",
+    "value": "120.00"
+  }
+]
 ```
 
-### Profiling
-To debug the container locally, the `JAVA_OPTS` environment variable can be provided when running the container.
-```bash
-docker run -p 8080:8080 -i -t -e JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" asset-re
+### CreditNotes
+
+| Method | Url | Description | Sample Valid Request Body |
+| ------ | --- | ----------- | ------------------------- |
+| POST   | /relay/api/creditnotes | Create new credit notes | [JSON](#creditnotescreate) | |
+
+##### <a id="creditnotescreate">Create CreditNotes -> /relay/api/creditnotes</a>
+```json
+[
+  {
+    "creditNumber": "CRN-01",
+    "value": "50.00"
+  },
+  {
+    "creditNumber": "CRN-02",
+    "value": "55.00"
+  },
+  {
+    "creditNumber": "CRN-03",
+    "value": "60.00"
+  }
+]
 ```
 
+### GetAggregatedView
 
-
-#### Recommended JAVA_OPTS
-It is strongly recommended that the following Java Options are set when running the re in production.
-```base
-JAVA_OPTS="-XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -javaagent:newrelic/newrelic.jar -Dnewrelic.environment=${environment} -Dnewrelic.config.file=newrelic/newrelic.yml -Djava.security.egd=file:/dev/./urandom"
-```
+| Method | Url | Description | Sample Valid Request Body |
+| ------ | --- | ----------- | ------------------------- |
+| GET    | /relay/api/getAggregatedView | Get Aggregated List of invoices and credit notes | |
 
 ## For more tasks run
 ```bash
 ./gradlew tasks
 ```
-
-## Deployment
-
-This project uses Terraform and the AWS CLI to deploy the re to the BNC ECS Cluster. To have the CI/CD pipeline deploy a re which has be deployed using a fork of this project you can follow the instructions below.
 
 
 
