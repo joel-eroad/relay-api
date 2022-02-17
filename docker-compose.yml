@@ -30,4 +30,4 @@ services:
 networks:
   relay-network:
     #    name: relay-network
-    driver: bridge
+    driver: bridge # use bridge driver instead of host
