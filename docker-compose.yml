@@ -21,7 +21,7 @@ services:
     networks:
       - relay-network
     depends_on:
-      - mysql
+      - mysql # depends on mysql db initialization
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://relay-db:3306/relay?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
       - SPRING_DATASOURCE_USERNAME=root
